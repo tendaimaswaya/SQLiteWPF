@@ -1,0 +1,111 @@
+﻿<Window x:Class="SQLiteWPF.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SQLiteWPF"
+        mc:Ignorable="d"
+          ResizeMode="CanMinimize"
+        WindowStartupLocation="CenterScreen"
+        Title="Main Window" Height="650" Width="610">
+    <Grid>
+        <StackPanel Orientation="Vertical" Margin="10">
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Name"/>
+                <TextBox Name="name_txtbox" Width="150" Margin="25,0,0,0"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                <Label Content="Age"/>
+                <TextBox Name="age_txtbox" Width="50" Margin="40,0,0,0"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                <Label Content="Amount"/>
+                <TextBox Name="amount_txtbox" Width="100" Margin="20,0,0,0"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                <Label Content="Comments"/>
+                <TextBox Name="comments_txtbox" Width="180" Height="60" Margin="5,0,0,0"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="75,10,0,0">
+                <Button Name="submit_btn" Content="Submit" Width="150" Click="submit_btn_Click"/>
+                <Button Name="truncate_btn" Content="Truncate" Width="150" Margin="180,0,0,0" Click="truncate_btn_Click"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                <ListView Name="listView" Margin="0,0,0,0" ItemsSource="{Binding Table}" DockPanel.Dock="Top" Width="575" Height="380">
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="ListViewItem">
+                            <Style.Resources>
+                                <LinearGradientBrush x:Key="ListItemHoverFill" EndPoint="0,1" StartPoint="0,0">
+                                    <GradientStop Color="#FFF1FBFF" Offset="0"/>
+                                    <GradientStop Color="#FFD5F1FE" Offset="1"/>
+                                </LinearGradientBrush>
+                            </Style.Resources>
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type ListViewItem}">
+                                        <Border CornerRadius="2" SnapsToDevicePixels="True"  
+                                BorderThickness="{TemplateBinding BorderThickness}"   
+                                BorderBrush="{TemplateBinding BorderBrush}"   
+                                Background="{TemplateBinding Background}">
+                                            <Border Name="InnerBorder" CornerRadius="0" BorderThickness="1">
+                                                <Grid>
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition MaxHeight="11" />
+                                                        <RowDefinition />
+                                                    </Grid.RowDefinitions>
+
+                                                    <Rectangle Name="UpperHighlight" Visibility="Collapsed"/>
+                                                    <GridViewRowPresenter Grid.RowSpan="2"   
+                                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"   
+                                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                                                </Grid>
+                                            </Border>
+                                        </Border>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter Property="Background" Value="{StaticResource ListItemHoverFill}" />
+                                                <Setter Property="BorderBrush" Value="#FFCCF0FF" />
+                                                <Setter TargetName="UpperHighlight" Property="Visibility" Value="Visible" />
+                                            </Trigger>
+
+                                            <Trigger Property="IsEnabled" Value="False">
+                                                <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" />
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter Property="Foreground" Value="Black"/>
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="Transparent"/>
+                                    <Setter Property="BorderBrush" Value="Transparent"/>
+                                </Trigger>
+                                <Trigger Property="IsSelected" Value="True">
+                                    <Setter Property="Background" Value="LightSkyBlue"/>
+                                    <Setter Property="BorderBrush" Value="Transparent"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ListView.ItemContainerStyle>
+
+                    <ListView.Background>
+                        <LinearGradientBrush>
+                            <GradientStop Color="Transparent" Offset="1"/>
+                        </LinearGradientBrush>
+                    </ListView.Background>
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="Id" Width="60" DisplayMemberBinding="{Binding Path=id}"/>
+                            <GridViewColumn Header="Date" Width="150" DisplayMemberBinding="{Binding Path=date}"/>
+                            <GridViewColumn Header="Name"  Width="100" DisplayMemberBinding="{Binding Path=name}"/>
+                            <GridViewColumn Header="Age"  Width="60" DisplayMemberBinding="{Binding Path=age}"/>
+                            <GridViewColumn Header="Amount"  Width="130" DisplayMemberBinding="{Binding Path=amount}"/>
+                            <GridViewColumn Header="Comments"  Width="70" DisplayMemberBinding="{Binding Path=comments}"/>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Window>
