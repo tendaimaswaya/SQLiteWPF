@@ -62,7 +62,7 @@ namespace SQLiteWPF
         {
             DataSet ds = new DataSet();        //dataset used to hold content returned from SQLite db
 
-            string str_query = "SELECT id, date, name, age, amount, comments FROM my_tbl ORDER BY id DESC";
+            string str_query = "SELECT id, date, name, age, amount, comments FROM my_tbl ORDER BY id DESC"; //consider using LINQ to SQL
             using (var cmd = new SQLiteCommand(str_query))
             {
                 SQLiteDataAdapter sda = new SQLiteDataAdapter();
